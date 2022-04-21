@@ -20,4 +20,6 @@ public:
     bool controle_date();
     friend ostream &operator<<(ostream &, Date &);
     friend istream &operator>>(istream &, Date &);
+    friend istream &operator>>(istream &, Date *);
+    friend ostream &operator<<(ostream &, Date *);
 };

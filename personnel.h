@@ -14,6 +14,7 @@ protected:
 
 public:
     Personnel();
+    Personnel(bool a) : Personne(a){};
     Personnel(int, float, float, Date, string, string, string, int, Date, string);
     void afficher();
     friend ostream &operator<<(ostream &, Personnel &);

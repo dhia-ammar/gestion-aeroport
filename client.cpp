@@ -30,7 +30,7 @@ ostream &operator<<(ostream &out, Client &c)
     out << c.nom << endl;
     out << "le prenom :";
     out << c.prenom << endl;
-    out << "le numero de la carte d identité :";
+    out << "le numero de la carte d identite :";
     out << c.CIN << endl;
     out << "le numero de telephone :";
     out << c.num_tel << endl;
@@ -69,4 +69,15 @@ int Client::rechercheCIN(string CIN)
         }
     }
     return -1;
+}
+ostream &operator<<(ostream &out, Client *c)
+{
+    out << c->id << "\t" << c->nom << "\t" << c->prenom << "\t" << c->CIN << "\t" << c->num_tel << "\t" << &(c->date_naiss) << "\t" << c->adresse << endl;
+    return out;
+}
+
+istream &operator>>(istream &in, Client *c)
+{
+    in >> c->id >> c->nom >> c->prenom >> c->CIN >> c->num_tel >> &(c->date_naiss) >> c->adresse;
+    return in;
 }

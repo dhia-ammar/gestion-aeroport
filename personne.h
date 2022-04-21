@@ -17,6 +17,7 @@ protected:
 public:
     static vector<Personne> tab;
     Personne();
+    Personne(bool){};
     Personne(string, string, string, int, Date, string);
     static int rechercheCIN(string);
     /*virtual void afficher() = 0;

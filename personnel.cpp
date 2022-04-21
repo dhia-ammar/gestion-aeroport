@@ -25,7 +25,7 @@ void Personnel::afficher()
 {
     cout << "le nom est :" << nom << endl;
     cout << "le prenom est :" << prenom << endl;
-    cout << " le numero de la carte d identité est :" << CIN << endl;
+    cout << " le numero de la carte d identite est :" << CIN << endl;
     cout << "le numero de telephone est :" << num_tel << endl;
     cout << "la date de naissance  est :" << this->date_naiss.getJours() << "/" << this->date_naiss.getMois() << "/" << this->date_naiss.getAnnee() << endl;
     cout << "l adresse   est :" << adresse << endl;
@@ -40,7 +40,7 @@ ostream &operator<<(ostream &out, Personnel &p)
     out << p.nom << endl;
     out << "le prenom :";
     out << p.prenom << endl;
-    out << "le numero de la carte d identité :";
+    out << "le numero de la carte d identite :";
     out << p.CIN << endl;
     out << "le numero de telephone :";
     out << p.num_tel << endl;
@@ -65,7 +65,7 @@ istream &operator>>(istream &in, Personnel &p)
     in >> p.nom;
     cout << "donner le prenom " << endl;
     in >> p.prenom;
-    cout << "donner le numero de la carte d identité " << endl;
+    cout << "donner le numero de la carte d identite " << endl;
     in >> p.CIN;
     cout << "donner le numero de telephne" << endl;
     in >> p.num_tel;

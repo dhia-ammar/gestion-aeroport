@@ -10,7 +10,7 @@ Personne::Personne()
     cin >> nom;
     cout << "donner le prenom " << endl;
     cin >> prenom;
-    cout << "donner le numero de la carte d identité" << endl;
+    cout << "donner le numero de la carte d identite" << endl;
     cin >> s;
     while (controleCIN(s) == false || rechercheCIN(s) != -1)
     {

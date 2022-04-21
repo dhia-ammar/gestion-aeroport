@@ -43,3 +43,14 @@ istream &operator>>(istream &in, Date &d)
     in >> d.jours >> d.mois >> d.annee;
     return in;
 }
+istream &operator>>(istream &is, Date *d)
+{
+    is >> d->jours >> d->mois >> d->annee;
+    return is;
+}
+ostream &
+operator<<(ostream &os, Date *d)
+{
+    os << d->jours << "\t" << d->mois << "\t" << d->annee;
+    return os;
+}

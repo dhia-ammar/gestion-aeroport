@@ -6,41 +6,42 @@ using namespace std;
 #include <fstream>
 Pilote::Pilote() : Personnel()
 {
-
     cout << "donner le numero de pilote" << endl;
     cin >> numero_pilote;
+    nbre_heure_vol = 0;
 }
 
 Pilote::Pilote(int numero_pilote, int matricule, float salaire, float nbre_heures_travail, Date date_embauche, string nom, string prenom, string CIN, int num_tel, Date date_naiss, string adresse) : Personnel(matricule, salaire, nbre_heures_travail, date_embauche, nom, prenom, CIN, num_tel, date_naiss, adresse)
 {
     this->numero_pilote = numero_pilote;
+    nbre_heure_vol = 0;
 }
 
 ostream &operator<<(ostream &out, Pilote &p)
 {
 
-    out << "le nom :" << endl;
-    out << p.nom;
-    out << "le prenom :" << endl;
-    out << p.prenom;
-    out << "le numero de la carte d identité :" << endl;
-    out << p.CIN;
-    out << "le numero de telephone :" << endl;
-    out << p.num_tel;
-    out << "la date de naissance  :" << endl;
-    out << p.date_naiss;
-    out << "adresse :" << endl;
-    out << p.adresse;
-    out << "la matricule est :" << endl;
-    out << p.matricule;
-    out << " le salaire est :" << endl;
-    out << p.salaire;
-    out << "le nombred heure de travail est  :" << endl;
-    out << p.nbre_heures_travail;
-    out << "la date d embauche est  :" << endl;
-    out << p.date_embauche;
-    out << "le numero de pilote" << endl;
-    out << p.numero_pilote;
+    out << "le nom :";
+    out << p.nom << endl;
+    out << "le prenom :";
+    out << p.prenom << endl;
+    out << "le numero de la carte d identite :";
+    out << p.CIN << endl;
+    out << "le numero de telephone :";
+    out << p.num_tel << endl;
+    out << "la date de naissance  :";
+    out << p.date_naiss << endl;
+    out << "adresse :";
+    out << p.adresse << endl;
+    out << "la matricule est :";
+    out << p.matricule << endl;
+    out << " le salaire est :";
+    out << p.salaire << endl;
+    out << "le nombred heure de travail est  :";
+    out << p.nbre_heures_travail << endl;
+    out << "la date d embauche est  :";
+    out << p.date_embauche << endl;
+    out << "le numero de pilote :";
+    out << p.numero_pilote << endl;
     out << "Le nombre d'heures de vol est :";
     out << p.nbre_heure_vol << endl;
     return out;
@@ -51,7 +52,7 @@ istream &operator>>(istream &in, Pilote &p)
     in >> p.nom;
     cout << "donner le prenom " << endl;
     in >> p.prenom;
-    cout << "donner le numero de la carte d identité " << endl;
+    cout << "donner le numero de la carte d identite " << endl;
     in >> p.CIN;
     cout << "donner le numero de telephne" << endl;
     in >> p.num_tel;
@@ -70,6 +71,27 @@ istream &operator>>(istream &in, Pilote &p)
     cout << "Donner le numero du pilote" << endl;
     in >> p.numero_pilote;
 
+    return in;
+}
+
+ostream &operator<<(ostream &out, Pilote *p)
+{
+    out << p->nom << "\t"
+        << p->prenom << "\t"
+        << p->CIN << "\t"
+        << p->num_tel << "\t"
+        << &(p->date_naiss) << "\t"
+        << p->adresse << "\t"
+        << p->matricule << "\t"
+        << p->salaire << "\t"
+        << &(p->date_embauche) << "\t"
+        << p->nbre_heures_travail << "\t"
+        << p->numero_pilote << endl;
+    return out;
+}
+istream &operator>>(istream &in, Pilote *p)
+{
+    in >> p->nom >> p->prenom >> p->CIN >> p->num_tel >> &(p->date_naiss) >> p->adresse >> p->matricule >> p->salaire >> &(p->date_embauche) >> p->nbre_heures_travail >> p->numero_pilote;
     return in;
 }
 

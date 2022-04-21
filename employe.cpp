@@ -5,6 +5,7 @@ using namespace std;
 #include "client.h"
 #include "hotesse.h"
 #include "pilote.h"
+#include <fstream>
 Employe::Employe() : Personnel()
 {
     cout << "donner le departement" << endl;
@@ -17,49 +18,7 @@ Employe::Employe(string departement, string poste, int matricule, float salaire,
     this->departement = departement;
     this->poste = poste;
 }
-ostream &operator<<(ostream &out, Employe &e)
-{
 
-    out << "le nom :";
-    out << e.nom << endl;
-    out << "le prenom :";
-    out << e.prenom << endl;
-    out << "le numero de la carte d identité :";
-    out << e.CIN << endl;
-    out << "le numero de telephone :";
-    out << e.num_tel << endl;
-    out << "la date de naissance  :";
-    out << e.date_naiss << endl;
-    out << "adresse :";
-    out << e.adresse << endl;
-    out << "le departement :";
-    out << e.departement << endl;
-    out << "la poste :";
-    out << e.poste << endl;
-
-    return out;
-}
-istream &operator>>(istream &in, Employe &e)
-{
-    cout << "donner le nom " << endl;
-    in >> e.nom;
-    cout << "donner le prenom " << endl;
-    in >> e.prenom;
-    cout << "donner le numero de la carte d identité " << endl;
-    in >> e.CIN;
-    cout << "donner le numero de telephne" << endl;
-    in >> e.num_tel;
-    cout << "donner la date de naissance" << endl;
-    in >> e.date_naiss;
-    cout << "donner l 'adresse  " << endl;
-    in >> e.adresse;
-    cout << "donner le depatement" << endl;
-    in >> e.departement;
-    cout << "donner la poste" << endl;
-    in >> e.poste;
-
-    return in;
-}
 int Employe::rechercheCIN(string CIN)
 {
     for (int i = 0; i < tab.size(); i++)
@@ -75,33 +34,25 @@ int Employe::rechercheCIN(string CIN)
 void Employe::ajouterClient()
 {
     Client client = Client();
-    Client::tab.push_back(client);
-    Personne p = static_cast<Personne>(client);
-    Personne::tab.push_back(p);
+    this->sauvegarder<Client>(client);
     cout << "Ajout avec Success!" << endl;
 }
 void Employe::ajouterEmploye()
 {
     Employe employe = Employe();
-    Employe::tab.push_back(employe);
-    Personne p = static_cast<Personne>(employe);
-    Personne::tab.push_back(p);
+    this->sauvegarder<Employe>(employe);
     cout << "Ajout avec Success!" << endl;
 }
 void Employe::ajouterHotesse()
 {
     Hotesse hotesse = Hotesse();
-    Hotesse::tab.push_back(hotesse);
-    Personne p = static_cast<Personne>(hotesse);
-    Personne::tab.push_back(p);
+    this->sauvegarder<Hotesse>(hotesse);
     cout << "Ajout avec Success!" << endl;
 }
 void Employe::ajouterPilote()
 {
     Pilote pilote = Pilote();
-    Pilote::tab.push_back(pilote);
-    Personne p = static_cast<Personne>(pilote);
-    Personne::tab.push_back(p);
+    this->sauvegarder<Pilote>(pilote);
     cout << "Ajout avec Success!" << endl;
 }
 
@@ -125,6 +76,7 @@ void Employe::modifierClient()
         Client::tab.push_back(client);
         Personne p = static_cast<Personne>(client);
         Personne::tab.push_back(p);
+        this->enregistrer_vector<Client>(Client::tab);
         cout << "Modification avec success!" << endl;
         cout << client;
     }
@@ -149,6 +101,7 @@ void Employe::modifierEmploye()
         Employe::tab.push_back(employe);
         Personne p = static_cast<Personne>(employe);
         Personne::tab.push_back(p);
+        this->enregistrer_vector<Employe>(Employe::tab);
         cout << "Modification avec success!" << endl;
         cout << employe;
     }
@@ -173,6 +126,7 @@ void Employe::modifierHotesse()
         Hotesse::tab.push_back(hotesse);
         Personne p = static_cast<Personne>(hotesse);
         Personne::tab.push_back(p);
+        this->enregistrer_vector<Hotesse>(Hotesse::tab);
         cout << "Modification avec success!" << endl;
         cout << hotesse;
     }
@@ -197,6 +151,7 @@ void Employe::modifierPilote()
         Pilote::tab.push_back(pilote);
         Personne p = static_cast<Personne>(pilote);
         Personne::tab.push_back(p);
+        this->enregistrer_vector<Pilote>(Pilote::tab);
         cout << "Modification avec success!" << endl;
         cout << pilote;
     }
@@ -217,6 +172,7 @@ void Employe::supprimerClient()
     {
         Personne::tab.erase(Personne::tab.begin() + idx_personnes);
         Client::tab.erase(Client::tab.begin() + idx_clients);
+        this->enregistrer_vector<Client>(Client::tab);
         cout << "Suppression avec success!" << endl;
     }
 }
@@ -236,6 +192,7 @@ void Employe::supprimerEmploye()
     {
         Personne::tab.erase(Personne::tab.begin() + idx_personnes);
         Employe::tab.erase(Employe::tab.begin() + idx_employes);
+        this->enregistrer_vector<Employe>(Employe::tab);
         cout << "Suppression avec success!" << endl;
     }
 }
@@ -255,6 +212,7 @@ void Employe::supprimerHotesse()
     {
         Personne::tab.erase(Personne::tab.begin() + idx_personnes);
         Hotesse::tab.erase(Hotesse::tab.begin() + idx_hotesses);
+        this->enregistrer_vector<Hotesse>(Hotesse::tab);
         cout << "suppression avec success!" << endl;
     }
 }
@@ -274,6 +232,133 @@ void Employe::supprimerPilote()
     {
         Personne::tab.erase(Personne::tab.begin() + idx_personnes);
         Pilote::tab.erase(Pilote::tab.begin() + idx_pilotes);
+        this->enregistrer_vector<Pilote>(Pilote::tab);
         cout << "Suppression avec success!" << endl;
     }
+}
+template <class T>
+void Employe::sauvegarder(T entite)
+{
+    string classe = typeid(entite).name();
+
+    string nom_fichier = classe + ".txt";
+
+    fstream f(nom_fichier, ios::out | ios::app);
+    f << &entite;
+    charger<T>();
+}
+template <class T>
+void Employe::charger()
+{
+    T::tab.clear();
+    string classe = typeid(T).name();
+    string nom_fichier = classe + ".txt";
+    fstream f(nom_fichier, ios::in);
+    f.seekg(0);
+    while (1)
+    {
+        T entite = T(false);
+        if (f.eof())
+            break;
+        f >> &entite;
+        T::tab.push_back(entite);
+        Personne p = static_cast<Personne>(entite);
+        Personne::tab.push_back(p);
+    }
+    T::tab.pop_back();
+    Personne::tab.pop_back();
+}
+
+template <class T>
+void Employe::enregistrer_vector(vector<T> vect)
+{
+    string classe = typeid(T).name();
+    string nom_fichier = classe + ".txt";
+    fstream f(nom_fichier, ios::out | ios::trunc);
+    for (int i = 0; i < vect.size(); i++)
+    {
+        sauvegarder<T>(vect[i]);
+    }
+}
+
+ostream &operator<<(ostream &out, Employe &e)
+{
+
+    out << "le nom :";
+    out << e.nom << endl;
+    out << "le prenom :";
+    out << e.prenom << endl;
+    out << "le numero de la carte d identite :";
+    out << e.CIN << endl;
+    out << "le numero de telephone :";
+    out << e.num_tel << endl;
+    out << "la date de naissance  :";
+    out << e.date_naiss << endl;
+    out << "adresse :";
+    out << e.adresse << endl;
+    out << "matricule :";
+    out << e.matricule << endl;
+    out << "salaire :";
+    out << e.salaire << endl;
+    out << "date d embauche :";
+    out << e.date_embauche << endl;
+    out << "nombre d heures de travail :";
+    out << e.nbre_heures_travail << endl;
+    out << "le departement :";
+    out << e.departement << endl;
+    out << "le poste :";
+    out << e.poste << endl;
+
+    return out;
+}
+istream &operator>>(istream &in, Employe &e)
+{
+    cout << "donner le nom " << endl;
+    in >> e.nom;
+    cout << "donner le prenom " << endl;
+    in >> e.prenom;
+    cout << "donner le numero de la carte d identite " << endl;
+    in >> e.CIN;
+    cout << "donner le numero de telephne" << endl;
+    in >> e.num_tel;
+    cout << "donner la date de naissance" << endl;
+    in >> e.date_naiss;
+    cout << "donner l 'adresse  " << endl;
+    in >> e.adresse;
+    cout << "donner la matricule :";
+    in >> e.matricule;
+    cout << "donner le salaire :";
+    in >> e.salaire;
+    cout << "donner la date d embauche :";
+    in >> e.date_embauche;
+    cout << "donner le nombre d heures de travail :";
+    in >> e.nbre_heures_travail;
+    cout << "donner le depatement" << endl;
+    in >> e.departement;
+    cout << "donner le poste" << endl;
+    in >> e.poste;
+
+    return in;
+}
+
+ostream &operator<<(ostream &out, Employe *e)
+{
+    out << e->nom << "\t"
+        << e->prenom << "\t"
+        << e->CIN << "\t"
+        << e->num_tel << "\t"
+        << &(e->date_naiss) << "\t"
+        << e->adresse << "\t"
+        << e->matricule << "\t"
+        << e->salaire << "\t"
+        << &(e->date_embauche) << "\t"
+        << e->nbre_heures_travail << "\t"
+        << e->departement << "\t"
+        << e->poste << endl;
+    return out;
+}
+istream &operator>>(istream &in, Employe *e)
+{
+    in >> e->nom >> e->prenom >> e->CIN >> e->num_tel >> &(e->date_naiss) >> e->adresse >> e->matricule >> e->salaire >> &(e->date_embauche) >> e->nbre_heures_travail >> e->departement >> e->poste;
+    return in;
 }

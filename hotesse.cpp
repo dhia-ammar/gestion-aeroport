@@ -23,7 +23,7 @@ ostream &operator<<(ostream &out, Hotesse &h)
     out << h.nom << endl;
     out << "le prenom :";
     out << h.prenom << endl;
-    out << "le numero de la carte d identité :";
+    out << "le numero de la carte d identite :";
     out << h.CIN << endl;
     out << "le numero de telephone :";
     out << h.num_tel << endl;
@@ -52,7 +52,7 @@ istream &operator>>(istream &in, Hotesse &h)
     in >> h.nom;
     cout << "donner le prenom " << endl;
     in >> h.prenom;
-    cout << "donner le numero de la carte d identité " << endl;
+    cout << "donner le numero de la carte d identite " << endl;
     in >> h.CIN;
     cout << "donner le numero de telephne" << endl;
     in >> h.num_tel;
@@ -75,7 +75,27 @@ istream &operator>>(istream &in, Hotesse &h)
 
     return in;
 }
-
+ostream &operator<<(ostream &out, Hotesse *h)
+{
+    out << h->nom << "\t"
+        << h->prenom << "\t"
+        << h->CIN << "\t"
+        << h->num_tel << "\t"
+        << &(h->date_naiss) << "\t"
+        << h->adresse << "\t"
+        << h->matricule << "\t"
+        << h->salaire << "\t"
+        << &(h->date_embauche) << "\t"
+        << h->nbre_heures_travail << "\t"
+        << h->langue << "\t"
+        << h->niveau << endl;
+    return out;
+}
+istream &operator>>(istream &in, Hotesse *h)
+{
+    in >> h->nom >> h->prenom >> h->CIN >> h->num_tel >> &(h->date_naiss) >> h->adresse >> h->matricule >> h->salaire >> &(h->date_embauche) >> h->nbre_heures_travail >> h->langue >> h->niveau;
+    return in;
+}
 int Hotesse::rechercheCIN(string CIN)
 {
     for (int i = 0; i < tab.size(); i++)
