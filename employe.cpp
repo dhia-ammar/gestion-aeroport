@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
 #include "employe.h"
+#include "client.h"
+#include "hotesse.h"
+#include "pilote.h"
 Employe::Employe() : Personnel()
 {
     cout << "donner le departement" << endl;
