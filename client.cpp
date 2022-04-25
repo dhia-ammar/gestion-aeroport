@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
 #include "client.h"
+#include "reservation.cpp"
+#include <vector>
+
 Client::Client() : Personne()
 {
     cout << "donner l identifiant " << endl;
@@ -21,6 +24,124 @@ void Client::afficher()
     cout << "le numero de telephone :" << num_tel << endl;
     cout << "la date de naissance est :" << date_naiss.getJours() << "/" << date_naiss.getMois() << "/" << date_naiss.getAnnee() << endl;
     cout << "l adresse est :" << adresse << endl;
+}
+void Client::effectuer_reservation()
+{
+    Date date_res = Date(1, 1, 1);
+    int nb_places;
+    int num_vol;
+    vector<Vol> vols_dispo;
+    cout << "Donner la date de reservation" << endl;
+    cin >> date_res;
+    cout << "Donner le nombre de palces que vous voulez reserver" << endl;
+    cin >> nb_places;
+    vols_dispo = Vol::vols_dispo(nb_places);
+    if (vols_dispo.size() > 0)
+    {
+        for (int i = 0; i < vols_dispo.size(); i++)
+        {
+            cout << i + 1 << " - " << vols_dispo[i];
+        }
+        cout << "Donner le numero de vol a reserver ou 0 si vous ne voulez reserver aucun vol: " << endl;
+        cin >> num_vol;
+        while (num_vol > vols_dispo.size() || num_vol < 0)
+        {
+            cout << "Numero de vol invalide donner un numero inferieur a " << vols_dispo.size() << endl;
+            cin >> num_vol;
+        }
+        if (num_vol != 0)
+        {
+            Reservation reservation = Reservation(date_res, this->CIN, nb_places, vols_dispo[num_vol - 1]);
+            Reservation::tab.push_back(reservation);
+            Employe::enregistrer_vector_autre(Reservation::tab);
+        }
+        else
+        {
+            cout << "Vouz avez annuler la reservation!" << endl;
+        }
+    }
+    else
+    {
+        cout << "Desole aucun vol n'est disponible!" << endl;
+    }
+}
+
+void Client::annuler_reservation()
+{
+    vector<Reservation> reservations;
+    int num_res;
+    for (int i = 0; i < Reservation::tab.size(); i++)
+    {
+        if (Reservation::tab[i].get_cin_client() == this->CIN)
+        {
+            reservations.push_back(Reservation::tab[i]);
+        }
+    }
+    if (reservations.size() > 0)
+    {
+
+        for (int i = 0; i < reservations.size(); i++)
+        {
+            cout << i + 1 << " - " << Reservation::tab[i];
+        }
+        cout << "Choisissez une reservation a annuler ou 0 si vous ne voulez annuler aucune reservation: " << endl;
+        cin >> num_res;
+        while (num_res > reservations.size() || num_res < 0)
+        {
+            cout << "Choix invalide! Choisissez une reservation a annuler ou 0 si vous ne voulez annuler aucune reservation: " << endl;
+        }
+        if (num_res != 0)
+        {
+            Reservation::supprimer(reservations[num_res - 1]);
+
+            cout << "Annulation avec success !";
+        }
+        else
+        {
+            cout << "Vous n avez annuler aucune reservation" << endl;
+        }
+    }
+    else
+    {
+        cout << "vous n 'avez aucune reservation a annuler";
+    }
+}
+void Client::afficher_mes_reservations()
+{
+    vector<Reservation> reservations;
+    int num_res, idx;
+    for (int i = 0; i < Reservation::tab.size(); i++)
+    {
+        if (Reservation::tab[i].get_cin_client() == this->CIN)
+        {
+            reservations.push_back(Reservation::tab[i]);
+        }
+    }
+    if (reservations.size() > 0)
+    {
+        cout << "Mes Reservations : " << endl;
+        for (int i = 0; i < reservations.size(); i++)
+        {
+            cout << reservations[i];
+        }
+    }
+    else
+    {
+        cout << "Vous n avez aucune reservation" << endl;
+    }
+}
+int Client::get_nbre_reservations()
+{
+    vector<Reservation> reservations;
+
+    for (int i = 0; i < Reservation::tab.size(); i++)
+    {
+        if (Reservation::tab[i].get_cin_client() == this->CIN)
+        {
+            reservations.push_back(Reservation::tab[i]);
+        }
+    }
+    return reservations.size();
 }
 ostream &operator<<(ostream &out, Client &c)
 {

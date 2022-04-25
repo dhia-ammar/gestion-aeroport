@@ -14,6 +14,8 @@ public:
   Hotesse();
   Hotesse(bool a) : Personnel(a){};
   Hotesse(string, string, int, float, float, Date, string, string, string, int, Date, string);
+  /*int get_nbre_vols();
+  void afficher_mes_vols();*/
   static int rechercheCIN(string);
   friend ostream &operator<<(ostream &, Hotesse &);
   friend istream &operator>>(istream &, Hotesse &);

@@ -4,6 +4,7 @@ using namespace std;
 #include "pilote.h"
 #include <vector>
 #include <fstream>
+#include "vol.h"
 Pilote::Pilote() : Personnel()
 {
     cout << "donner le numero de pilote" << endl;
@@ -16,6 +17,31 @@ Pilote::Pilote(int numero_pilote, int matricule, float salaire, float nbre_heure
     this->numero_pilote = numero_pilote;
     nbre_heure_vol = 0;
 }
+
+/*int Pilote::get_nbre_vols()
+{
+
+    vector<Vol> vols;
+    for (int i = 0; i < Vol::tab.size(); i++)
+    {
+        if (Vol::tab[i].get_pilote().get_cin() == this->CIN)
+        {
+            vols.push_back(Vol::tab[i]);
+        }
+    }
+    return vols.size();
+}
+
+void Pilote::afficher_mes_vols()
+{
+    for (int i = 0; i < Vol::tab.size(); i++)
+    {
+        if (Vol::tab[i].get_pilote().get_cin() == this->CIN)
+        {
+            cout << Vol::tab[i];
+        }
+    }
+}*/
 
 ostream &operator<<(ostream &out, Pilote &p)
 {

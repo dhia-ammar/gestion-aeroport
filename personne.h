@@ -19,6 +19,8 @@ public:
     Personne();
     Personne(bool){};
     Personne(string, string, string, int, Date, string);
+    string get_cin();
+    Date get_date_naiss();
     static int rechercheCIN(string);
     /*virtual void afficher() = 0;
     virtual void modifier() = 0;

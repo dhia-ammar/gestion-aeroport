@@ -6,6 +6,9 @@ using namespace std;
 #include "hotesse.h"
 #include "pilote.h"
 #include <fstream>
+#include "vol.h"
+#include "reservation.h"
+
 Employe::Employe() : Personnel()
 {
     cout << "donner le departement" << endl;
@@ -53,6 +56,12 @@ void Employe::ajouterPilote()
 {
     Pilote pilote = Pilote();
     this->sauvegarder<Pilote>(pilote);
+    cout << "Ajout avec Success!" << endl;
+}
+void Employe::ajouterVol()
+{
+    Vol vol = Vol();
+    this->sauvegarder_autre<Vol>(vol);
     cout << "Ajout avec Success!" << endl;
 }
 
@@ -170,10 +179,17 @@ void Employe::supprimerClient()
     }
     else
     {
-        Personne::tab.erase(Personne::tab.begin() + idx_personnes);
-        Client::tab.erase(Client::tab.begin() + idx_clients);
-        this->enregistrer_vector<Client>(Client::tab);
-        cout << "Suppression avec success!" << endl;
+        if (Client::tab[idx_clients].get_nbre_reservations() > 0)
+        {
+            cout << "Impossible de supprimer ce client car il a des reservations" << endl;
+        }
+        else
+        {
+            Personne::tab.erase(Personne::tab.begin() + idx_personnes);
+            Client::tab.erase(Client::tab.begin() + idx_clients);
+            this->enregistrer_vector<Client>(Client::tab);
+            cout << "Suppression avec success!" << endl;
+        }
     }
 }
 void Employe::supprimerEmploye()
@@ -210,10 +226,17 @@ void Employe::supprimerHotesse()
     }
     else
     {
-        Personne::tab.erase(Personne::tab.begin() + idx_personnes);
-        Hotesse::tab.erase(Hotesse::tab.begin() + idx_hotesses);
-        this->enregistrer_vector<Hotesse>(Hotesse::tab);
-        cout << "suppression avec success!" << endl;
+        if (Vol::get_nbre_vols_hotesse(Hotesse::tab[idx_hotesses]) > 0)
+        {
+            cout << "Impossible de supprimer cette Hotesse car elle a des vols" << endl;
+        }
+        else
+        {
+            Personne::tab.erase(Personne::tab.begin() + idx_personnes);
+            Hotesse::tab.erase(Hotesse::tab.begin() + idx_hotesses);
+            this->enregistrer_vector<Hotesse>(Hotesse::tab);
+            cout << "suppression avec success!" << endl;
+        }
     }
 }
 void Employe::supprimerPilote()
@@ -230,54 +253,17 @@ void Employe::supprimerPilote()
     }
     else
     {
-        Personne::tab.erase(Personne::tab.begin() + idx_personnes);
-        Pilote::tab.erase(Pilote::tab.begin() + idx_pilotes);
-        this->enregistrer_vector<Pilote>(Pilote::tab);
-        cout << "Suppression avec success!" << endl;
-    }
-}
-template <class T>
-void Employe::sauvegarder(T entite)
-{
-    string classe = typeid(entite).name();
-
-    string nom_fichier = classe + ".txt";
-
-    fstream f(nom_fichier, ios::out | ios::app);
-    f << &entite;
-    charger<T>();
-}
-template <class T>
-void Employe::charger()
-{
-    T::tab.clear();
-    string classe = typeid(T).name();
-    string nom_fichier = classe + ".txt";
-    fstream f(nom_fichier, ios::in);
-    f.seekg(0);
-    while (1)
-    {
-        T entite = T(false);
-        if (f.eof())
-            break;
-        f >> &entite;
-        T::tab.push_back(entite);
-        Personne p = static_cast<Personne>(entite);
-        Personne::tab.push_back(p);
-    }
-    T::tab.pop_back();
-    Personne::tab.pop_back();
-}
-
-template <class T>
-void Employe::enregistrer_vector(vector<T> vect)
-{
-    string classe = typeid(T).name();
-    string nom_fichier = classe + ".txt";
-    fstream f(nom_fichier, ios::out | ios::trunc);
-    for (int i = 0; i < vect.size(); i++)
-    {
-        sauvegarder<T>(vect[i]);
+        if (Vol::get_nbre_vols_pilote(Pilote::tab[idx_pilotes]) > 0)
+        {
+            cout << "Impossible de supprimer ce Pilote car elle a des vols" << endl;
+        }
+        else
+        {
+            Personne::tab.erase(Personne::tab.begin() + idx_personnes);
+            Pilote::tab.erase(Pilote::tab.begin() + idx_pilotes);
+            this->enregistrer_vector<Pilote>(Pilote::tab);
+            cout << "Suppression avec success!" << endl;
+        }
     }
 }
 

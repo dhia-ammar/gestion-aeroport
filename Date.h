@@ -22,4 +22,5 @@ public:
     friend istream &operator>>(istream &, Date &);
     friend istream &operator>>(istream &, Date *);
     friend ostream &operator<<(ostream &, Date *);
+    bool operator==(const Date &d) const { return (this->jours == d.jours && this->mois == d.mois && this->annee == d.annee); };
 };

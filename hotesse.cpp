@@ -4,6 +4,7 @@ using namespace std;
 #include "hotesse.h"
 #include <vector>
 #include <fstream>
+#include "vol.h"
 
 Hotesse::Hotesse(string langue, string niveau, int matricule, float salaire, float nbre_heures_travail, Date date_embauche, string nom, string prenom, string CIN, int num_tel, Date date_naiss, string adresse) : Personnel(matricule, salaire, nbre_heures_travail, date_embauche, nom, prenom, CIN, num_tel, date_naiss, adresse)
 {
@@ -17,6 +18,29 @@ Hotesse::Hotesse() : Personnel()
     cout << "donner le niveau:" << endl;
     cin >> niveau;
 }
+
+/*int Hotesse::get_nbre_vols()
+{
+    vector<Vol> vols;
+    for (int i = 0; i < Vol::tab.size(); i++)
+    {
+        if (Vol::tab[i].get_hotesse().get_cin() == this->CIN)
+        {
+            vols.push_back(Vol::tab[i]);
+        }
+    }
+    return vols.size();
+}
+void Hotesse::afficher_mes_vols()
+{
+    for (int i = 0; i < Vol::tab.size(); i++)
+    {
+        if (Vol::tab[i].get_hotesse().get_cin() == this->CIN)
+        {
+            cout << Vol::tab[i];
+        }
+    }
+}*/
 ostream &operator<<(ostream &out, Hotesse &h)
 {
     out << "le nom :";

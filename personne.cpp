@@ -44,6 +44,11 @@ Personne::Personne(string nom, string prenom, string CIN, int num_tel, Date d, s
     this->date_naiss.setAnnee(d.getAnnee());
     this->adresse = adresse;
 }
+
+string Personne::get_cin()
+{
+    return this->CIN;
+}
 bool Personne::controleCIN(string CIN)
 {
     if (CIN.length() != 8)
@@ -62,7 +67,10 @@ bool Personne::controleCIN(string CIN)
         return true;
     }
 }
-
+Date Personne::get_date_naiss()
+{
+    return this->date_naiss;
+}
 int Personne::rechercheCIN(string CIN1)
 {
     for (int i = 0; i < tab.size(); i++)
